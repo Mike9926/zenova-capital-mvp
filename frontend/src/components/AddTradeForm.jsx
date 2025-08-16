@@ -1,6 +1,6 @@
-cat > src/components/AddTradeForm.jsx <<'EOF'
+
 import { useState } from "react";
-import { Card } from "./Card.jsx";
+import Card from "./Card.jsx";
 import { Api } from "../lib/api.js";
 
 export default function AddTradeForm({ onSaved }) {
@@ -44,4 +44,3 @@ export default function AddTradeForm({ onSaved }) {
     </Card>
   );
 }
-EOF

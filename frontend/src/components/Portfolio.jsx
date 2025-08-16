@@ -1,6 +1,6 @@
-cat > src/components/Portfolio.jsx <<'EOF'
+
 import { useEffect, useState } from "react";
-import { Card } from "./Card.jsx";
+import Card from "./Card.jsx";
 import { Api } from "../lib/api.js";
 
 export default function Portfolio() {
@@ -69,4 +69,3 @@ export default function Portfolio() {
     </Card>
   );
 }
-EOF

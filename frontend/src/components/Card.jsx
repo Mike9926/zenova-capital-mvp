@@ -1,4 +1,4 @@
-cat > src/components/Card.jsx <<'EOF'
+
 export default function Card({ title, children, footer }) {
   return (
     <div className="bg-white rounded-2xl shadow-soft border p-4">
@@ -8,4 +8,3 @@ export default function Card({ title, children, footer }) {
     </div>
   );
 }
-EOF

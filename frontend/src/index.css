@@ -2,9 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Google font import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
   --zc-navy: #3A4754;
   --zc-sand: #E5C9A6;
   --zc-ink:  #1F2833;
   --zc-bg:   #FFFFFF;
+  --zc-accent: #FF8A3D;
+  --zc-accent-rgb: 255 138 61;
+  --zc-accent-alt: #FFB662;
+  --zc-bg-alt: #F5F7FA;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 2px 4px -1px rgba(31 40 51 / 0.12), 0 1px 2px rgba(31 40 51 / 0.08);
+  --shadow-md: 0 6px 18px -4px rgba(31 40 51 / 0.18), 0 2px 6px rgba(31 40 51 / 0.12);
+  --shadow-lg: 0 18px 40px -8px rgba(31 40 51 / 0.28);
+  --gradient-accent: linear-gradient(135deg, var(--zc-accent) 0%, var(--zc-accent-alt) 55%, var(--zc-sand) 100%);
+  --transition-base: 160ms cubic-bezier(.4,0,.2,1);
+  --zc-navy-rgb: 58 71 84;
+  --zc-sand-rgb: 229 201 166;
+  --zc-ink-rgb: 31 40 51;
+  --zc-accent-alt-rgb: 255 182 98;
+  --zc-css-version: "1.6";
 }
+
+/* Base (plain CSS to avoid early @apply failures) */
+html {
+  font-size: clamp(14px, 0.9rem + 0.35vw, 18px);
+  -webkit-text-size-adjust: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background: linear-gradient(160deg,var(--zc-bg) 0%, var(--zc-bg-alt) 120%);
+  color: var(--zc-ink);
+  font-variant-numeric: tabular-nums;
+}
+::selection { background: var(--zc-accent); color: #1F2833; }
+h1,h2,h3 { scroll-margin-top: 5rem; }
+
+/* Components (no @apply – direct CSS so they survive even if Tailwind fails) */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:.5rem; padding:.75rem 1.25rem;
+  font-weight:600; font-family:inherit;
+  background: var(--zc-navy); color: var(--zc-sand);
+  border-radius: .5rem; border:1px solid rgba(255 255 255 / .05);
+  box-shadow: var(--shadow-sm); text-decoration:none;
+  transition: background .25s var(--transition-base), transform .18s var(--transition-base), box-shadow .25s var(--transition-base);
+  cursor:pointer; position:relative;
+}
+.btn:hover { background: var(--zc-ink); box-shadow: var(--shadow-md); }
+.btn:active { transform: translateY(1px); }
+.btn-accent { background: var(--zc-accent); color:#1F2833; }
+.btn-accent:hover { background: var(--zc-accent-alt); }
+
+.card {
+  position:relative; display:flex; flex-direction:column; gap:.6rem;
+  background: linear-gradient(175deg,rgba(255 255 255 / .92),rgba(255 255 255 / .75));
+  border:1px solid rgba(58 71 84 / .10);
+  border-radius: 1rem; padding:1.25rem;
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s var(--transition-base), box-shadow .25s var(--transition-base);
+}
+.card:hover { transform:translateY(-4px); box-shadow: var(--shadow-md); }
+
+.hero {
+  position:relative; overflow:hidden;
+  border-radius: 1.25rem;
+  padding: 3.5rem 1.5rem;
+  background: var(--gradient-accent);
+  color:#1F2833;
+  margin-bottom: 2.5rem;
+}
+@media (min-width:768px){
+  .hero { padding:5rem 3rem; }
+}
+.hero::after {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255 255 255 / .35), transparent 60%),
+    radial-gradient(circle at 15% 80%, rgba(255 255 255 / .22), transparent 65%);
+  mix-blend-mode: overlay;
+}
+.hero h1 {
+  margin:0 0 1rem; font-size: clamp(2.25rem,1.5rem + 2.5vw,3.75rem);
+  font-weight:800; letter-spacing:-.02em;
+}
+.hero p {
+  margin:0; max-width: 48ch; font-size: clamp(1rem,.95rem + .5vw,1.3rem);
+  opacity:.9;
+}
+
+/* Simple responsive grid utility (fallback if Tailwind absent) */
+.grid-cards {
+  display:grid; gap:1.25rem;
+}
+@media (min-width:640px){ .grid-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (min-width:1024px){ .grid-cards { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
+/* Container helper */
+.container-app { width:100%; max-width:1280px; margin-inline:auto; padding-inline:1rem; }
+@media (min-width:640px){ .container-app { padding-inline:1.5rem; } }
+@media (min-width:1024px){ .container-app { padding-inline:2rem; } }
+
+/* Small animation */
+.fade-in { opacity:0; transform:translateY(8px); animation:fadeIn .5s var(--transition-base) forwards; }
+@keyframes fadeIn { to { opacity:1; transform:translateY(0);} }
+
+/* Debug badge */
+body.css-debug-banner::before {
+  content:"index.css v" attr(data-css-version, var(--zc-css-version));
+  position:fixed; bottom:.5rem; right:.5rem;
+  background: var(--zc-ink); color: var(--zc-sand);
+  font:600 11px/1 system-ui,sans-serif;
+  padding:.4rem .6rem; border-radius:6px; box-shadow: var(--shadow-sm);
+  letter-spacing:.5px; opacity:.9; pointer-events:none; z-index:9999;
+}
+
+body.css-debug-outline { outline:3px dashed var(--zc-accent); outline-offset:-3px; }
+
+/* Dark mode (optional class) */
+.dark body,
+body.dark {
+  background: linear-gradient(170deg, var(--zc-bg), #0D1216 120%);
+  color: var(--zc-ink);
+}
+.dark .card {
+  background: linear-gradient(170deg,rgba(40 48 56 / .82),rgba(40 48 56 / .55));
+  border-color: rgba(255 255 255 / .08);
+}
+.dark .btn { box-shadow: var(--shadow-sm); }
+.dark .btn:hover { box-shadow: var(--shadow-md); }
+
+/* Scrollbar (webkit) */
+*::-webkit-scrollbar { width:10px; height:10px; }
+*::-webkit-scrollbar-track { background:transparent; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--zc-navy), var(--zc-ink));
+  border-radius:6px; border:2px solid var(--zc-bg);
+}
+*::-webkit-scrollbar-thumb:hover { background: linear-gradient(var(--zc-ink), #111A23); }

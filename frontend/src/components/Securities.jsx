@@ -1,6 +1,6 @@
-cat > src/components/Securities.jsx <<'EOF'
+
 import { useEffect, useState } from "react";
-import { Card } from "./Card.jsx";
+import Card from '/src/components/Card.jsx'
 import { Api } from "../lib/api.js";
 
 export default function Securities() {
@@ -25,4 +25,3 @@ export default function Securities() {
     </Card>
   );
 }
-EOF

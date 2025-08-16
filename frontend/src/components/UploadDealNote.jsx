@@ -1,6 +1,6 @@
-cat > src/components/UploadDealNote.jsx <<'EOF'
+
 import { useState } from "react";
-import { Card } from "./Card.jsx";
+import Card from "./Card.jsx";
 import { Api } from "../lib/api.js";
 
 export default function UploadDealNote({ onAdd }) {
@@ -68,4 +68,3 @@ export default function UploadDealNote({ onAdd }) {
     </Card>
   );
 }
-EOF

@@ -1,4 +1,4 @@
-cat > src/lib/api.js <<'EOF'
+
 const API = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 
 async function jfetch(path, opts = {}) {
@@ -23,4 +23,3 @@ export const Api = {
     return res.json();
   },
 };
-EOF
